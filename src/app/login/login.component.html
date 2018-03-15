@@ -1,3 +1,14 @@
 <p>
   <button (click)="login()">Login with Google</button>
 </p>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <input type="email" placeholder="email" ngModel name="email">
+  <input type="text" placeholder="password" ngModel name="password">
+  <button>Submit</button>
+</form>
+<form (ngSubmit)="onLogin(ff)" #ff="ngForm">
+  <input type="email" placeholder="email" ngModel name="emaill">
+  <input type="text" placeholder="password" ngModel name="passwordd">
+  <button>Login</button>
+</form>
+<button (click)="logout()">Logout</button>

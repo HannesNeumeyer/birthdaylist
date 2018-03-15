@@ -9,7 +9,8 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
 import { ListComponent } from './list/list.component';
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router'
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
