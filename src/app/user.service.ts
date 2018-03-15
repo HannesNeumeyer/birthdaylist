@@ -14,4 +14,8 @@ export class UserService {
   save(user){
     this.db.doc('/users/' + user.uid).set({email: user.email})
   }
+
+  getBirthdays(user){
+    return this.db.collection('/users/' + user.uid + '/list').valueChanges()
+  }
 }

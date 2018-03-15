@@ -9,6 +9,7 @@ import { UserService } from '../user.service';
 })
 export class ListComponent implements OnInit {
   user;
+  birthdays$;
 
   constructor(private db: AngularFirestore, private userService: UserService) { }
 
@@ -17,6 +18,7 @@ export class ListComponent implements OnInit {
       if (!user) return;
 
       this.user = user
+      this.birthdays$ = this.userService.getBirthdays(this.user);
     })
   }
 

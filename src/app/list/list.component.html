@@ -4,3 +4,7 @@
 <input type="text" #name>
 <input type="text" #date>
 <button (click)="save(name.value, date.value)">Save</button>
+
+<ul>
+  <li *ngFor="let birthday of birthdays$ | async">{{birthday.name}} - {{birthday.date}}</li>
+</ul>
