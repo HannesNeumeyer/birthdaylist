@@ -10,7 +10,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 })
 export class ListComponent implements OnInit, AfterViewInit {
   user;
-  displayedColumns = ['name', 'date'];
+  displayedColumns = ['name', 'date', 'days'];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatSort) sort: MatSort;
@@ -35,7 +35,19 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   save(name, date){
-    this.db.collection('/users/' + this.user.uid + '/list').add({name: name, date: date})
+    var oneDay = 24*60*60*1000; 
+    let today = new Date()
+    let birthday = new Date(date)
+    
+    if (today.getMonth() >= birthday.getMonth() && today.getDate() >= birthday.getDate()) 
+      {
+        birthday.setFullYear(today.getFullYear()+1); 
+      } else {
+        birthday.setFullYear(today.getFullYear());
+      }
+    let days = Math.round(Math.abs((today.getTime() - birthday.getTime())/(oneDay)))+1;
+
+    this.db.collection('/users/' + this.user.uid + '/list').add({name: name, date: date, days: days})
   }
 
 }
