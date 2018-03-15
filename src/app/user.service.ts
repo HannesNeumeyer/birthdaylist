@@ -12,6 +12,6 @@ export class UserService {
   }
 
   save(user){
-    this.db.collection('/users').add({email: user.email})
+    this.db.doc('/users/' + user.uid).set({email: user.email})
   }
 }

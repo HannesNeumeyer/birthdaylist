@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +10,13 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router) { }
 
   ngOnInit() {
   }
 
   login(){
     this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+    this.router.navigate(['/birthday-list'])
   }
 }

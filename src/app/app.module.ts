@@ -8,18 +8,25 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
+import { ListComponent } from './list/list.component';
+import { RouterModule } from '@angular/router'
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule.forRoot([
+          {path:'', component: LoginComponent},
+          {path:'birthday-list', component: ListComponent},
+        ])
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
