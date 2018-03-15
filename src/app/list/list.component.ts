@@ -39,10 +39,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     let today = new Date()
     let birthday = new Date(date)
     
-    if (today.getMonth() >= birthday.getMonth() && today.getDate() >= birthday.getDate()) 
+    if (today.getMonth() > birthday.getMonth()) 
       {
         birthday.setFullYear(today.getFullYear()+1); 
-      } else {
+      } 
+    else if (today.getMonth() <= birthday.getMonth() && today.getDate() <= birthday.getDate())
+      {
+        birthday.setFullYear(today.getFullYear()); 
+      } 
+    else {
         birthday.setFullYear(today.getFullYear());
       }
     let days = Math.round(Math.abs((today.getTime() - birthday.getTime())/(oneDay)))+1;
