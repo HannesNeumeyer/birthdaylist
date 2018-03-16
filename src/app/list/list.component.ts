@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { UserService } from '../user.service';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
@@ -10,8 +10,9 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 })
 export class ListComponent implements OnInit, AfterViewInit {
   user;
-  displayedColumns = ['name', 'date', 'days', 'years'];
+  displayedColumns = ['name', 'date', 'days', 'years', 'delete'];
   dataSource = new MatTableDataSource<any>();
+  idList = [];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -25,6 +26,17 @@ export class ListComponent implements OnInit, AfterViewInit {
       this.user = user
       this.userService.getBirthdays(this.user).subscribe(data => {
         this.dataSource.data = data
+      })
+      this.db.collection('/users/' + this.user.uid + '/list').snapshotChanges().map(docArray => {
+        return docArray.map(doc => {
+          return {
+            id: doc.payload.doc.id,
+            data: doc.payload.doc.data()
+          }
+        })
+      }).subscribe(idList => {
+        this.idList = idList
+        // don't need to unsubscribe here because old subscription is overwritten (only shows up once per console.log)
       })
     })
   }
@@ -57,12 +69,36 @@ export class ListComponent implements OnInit, AfterViewInit {
     else {
         birthday.setFullYear(today.getFullYear());
       }
+
     let days = Math.round(Math.abs((today.getTime() - birthday.getTime())/(oneDay)))+1;
-
-
     let years = tYear - bYear
 
     this.db.collection('/users/' + this.user.uid + '/list').add({name: name, date: date, days: days, years: years})
+  }
+
+  delete(name, date){
+    //this.db.doc('/users/' + this.user.uid + '/list/' + 'oLkfLTcNn22C7hFkGFIF').delete()
+    //console.log(this.db.doc('/users/' + this.user.uid + '/list/' + 'F0DWkfNEKm3kBKcgSa5h'))
+
+    // this.db.collection('/users/' + this.user.uid + '/list').snapshotChanges().map(docArray => {
+    //   return docArray.map(doc => {
+    //     return {
+    //       id: doc.payload.doc.id,
+    //       data: doc.payload.doc.data()
+    //     }
+    //   })
+    // }).subscribe(exercises => {
+    //   console.log(exercises)
+    //   // don't need to unsubscribe here because old subscription is overwritten (only shows up once per console.log)
+    // })
+    
+    let idd;
+    this.idList.forEach(data => {
+      if (data.data.name == name && data.data.date == date){
+        idd = data.id
+      }
+      this.db.doc('/users/' + this.user.uid + '/list/' + idd).delete()
+    })
   }
 
 }
