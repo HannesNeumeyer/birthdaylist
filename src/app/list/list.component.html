@@ -12,9 +12,13 @@
       <mat-cell *matCellDef="let element">{{element.date | date}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="days">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Tage bis Geburtstag</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.days}}</mat-cell>
-      </ng-container>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tage bis Geburtstag</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.days}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="years">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Wird Jahre alt</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.years}}</mat-cell>
+    </ng-container>
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
