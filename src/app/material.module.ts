@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
-import {MatTableModule, MatSortModule, MatPaginatorModule} from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule} from '@angular/material';
 
 @NgModule({
-  imports: [MatTableModule, MatSortModule, MatPaginatorModule],
-  exports: [MatTableModule, MatSortModule, MatPaginatorModule]
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule],
+  exports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatProgressSpinnerModule]
 })
 
 

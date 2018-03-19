@@ -1,14 +1,30 @@
-<p>
-  <button (click)="login()">Login with Google</button>
-</p>
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <input type="email" placeholder="email" ngModel name="email">
-  <input type="text" placeholder="password" ngModel name="password">
-  <button>Submit</button>
+<div fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+  <button *ngIf="!user && !eandp" (click)="login()" mat-raised-button color="primary" class="logButton">Login mit Google</button>
+  <button *ngIf="!user && !eandp" (click)="eandp = true" mat-raised-button color="primary" class="logButton">Login mit Email</button>
+</div>
+
+<form *ngIf="eandp" (ngSubmit)="onLogin(ff)" #ff="ngForm">
+  <mat-form-field>
+    <input  matInput type="email" placeholder="Email" ngModel name="emaill">
+  </mat-form-field>
+  <mat-form-field>
+    <input  matInput type="password" placeholder="Passwort" ngModel name="passwordd">
+  </mat-form-field>
+  <br>
+  <button color="primary" mat-raised-button class="logButton">Login</button>
 </form>
-<form (ngSubmit)="onLogin(ff)" #ff="ngForm">
-  <input type="email" placeholder="email" ngModel name="emaill">
-  <input type="text" placeholder="password" ngModel name="passwordd">
-  <button>Login</button>
+<br><br>
+<form *ngIf="eandp" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <mat-form-field>
+    <input  matInput type="email" placeholder="Email" ngModel name="email">
+  </mat-form-field>
+  <mat-form-field>
+    <input  matInput type="password" placeholder="Passwort" ngModel name="password">
+  </mat-form-field>
+  <br>
+  <button color="primary" mat-raised-button class="logButton">Anmelden</button>
 </form>
-<button (click)="logout()">Logout</button>
+<br>
+
+<app-list *ngIf="user"></app-list>
+<button *ngIf="user" mat-button color="primary" (click)="logout()">Logout</button>

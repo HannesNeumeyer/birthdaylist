@@ -9,10 +9,13 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit, AfterViewInit {
+  isLoading = true;
   user;
   displayedColumns = ['name', 'date', 'days', 'years', 'delete'];
   dataSource = new MatTableDataSource<any>();
   idList = [];
+  names;
+  dates;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,6 +39,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         })
       }).subscribe(idList => {
         this.idList = idList
+        this.isLoading = false;
         // don't need to unsubscribe here because old subscription is overwritten (only shows up once per console.log)
       })
     })
@@ -60,12 +64,9 @@ export class ListComponent implements OnInit, AfterViewInit {
       } 
     else if (today.getMonth() == birthday.getMonth() && today.getDate() >= birthday.getDate())
       {
+        birthday.setFullYear(today.getFullYear()+1); 
         bYear -= 1;
       }   
-    else if (today.getMonth() <= birthday.getMonth() && today.getDate() <= birthday.getDate())
-      {
-        birthday.setFullYear(today.getFullYear()); 
-      } 
     else {
         birthday.setFullYear(today.getFullYear());
       }
@@ -74,24 +75,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     let years = tYear - bYear
 
     this.db.collection('/users/' + this.user.uid + '/list').add({name: name, date: date, days: days, years: years})
+    this.names = '';
+    this.dates = '';
   }
 
-  delete(name, date){
-    //this.db.doc('/users/' + this.user.uid + '/list/' + 'oLkfLTcNn22C7hFkGFIF').delete()
-    //console.log(this.db.doc('/users/' + this.user.uid + '/list/' + 'F0DWkfNEKm3kBKcgSa5h'))
-
-    // this.db.collection('/users/' + this.user.uid + '/list').snapshotChanges().map(docArray => {
-    //   return docArray.map(doc => {
-    //     return {
-    //       id: doc.payload.doc.id,
-    //       data: doc.payload.doc.data()
-    //     }
-    //   })
-    // }).subscribe(exercises => {
-    //   console.log(exercises)
-    //   // don't need to unsubscribe here because old subscription is overwritten (only shows up once per console.log)
-    // })
-    
+  delete(name, date){    
     let idd;
     this.idList.forEach(data => {
       if (data.data.name == name && data.data.date == date){

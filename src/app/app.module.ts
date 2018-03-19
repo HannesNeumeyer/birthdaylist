@@ -9,10 +9,10 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './user.service';
 import { ListComponent } from './list/list.component';
-import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 @NgModule({
@@ -26,13 +26,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FormsModule,
     MaterialModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule,
-    RouterModule.forRoot([
-          {path:'', component: LoginComponent},
-          {path:'birthday-list', component: ListComponent},
-        ])
+    AngularFireAuthModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

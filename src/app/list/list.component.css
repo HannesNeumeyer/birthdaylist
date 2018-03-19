@@ -1,0 +1,35 @@
+mat-header-cell {
+  color: royalblue;
+  font-size: 1.3rem;
+}
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
+.mat-column-delete{
+  flex: 0 0 10px;
+}
+@media only screen and (max-width: 700px) {
+  .mat-column-years {
+      display: none;
+  }
+  mat-header-cell {
+    font-size: 1rem;
+  }
+  .mat-row{
+    padding: 0;
+  }
+  .mat-header-row{
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 500px) {
+  mat-header-cell {
+    font-size: 0.9rem;
+  }
+}
+.delClick {
+  color: red;
+  cursor: pointer;
+}
+

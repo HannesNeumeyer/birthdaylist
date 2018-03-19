@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class UserService {
@@ -18,4 +19,6 @@ export class UserService {
   getBirthdays(user){
     return this.db.collection('/users/' + user.uid + '/list').valueChanges()
   }
+
+
 }
