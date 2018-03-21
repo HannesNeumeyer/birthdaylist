@@ -40,6 +40,7 @@ export class ListComponent implements OnInit, AfterViewInit {
       }).subscribe(idList => {
         this.idList = idList
         this.isLoading = false;
+        this.update()
         // don't need to unsubscribe here because old subscription is overwritten (only shows up once per console.log)
       })
     })
@@ -77,6 +78,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     this.db.collection('/users/' + this.user.uid + '/list').add({name: name, date: date, days: days, years: years})
     this.names = '';
     this.dates = '';
+    console.log(birthday)
   }
 
   delete(name, date){    
@@ -88,5 +90,40 @@ export class ListComponent implements OnInit, AfterViewInit {
       this.db.doc('/users/' + this.user.uid + '/list/' + idd).delete()
     })
   }
+
+  update(){ 
+    let oneDay = 24*60*60*1000; 
+    let today = new Date()
+    let birthday;    
+    
+    let idd;
+    this.idList.forEach(data => {
+      idd = data.id
+      birthday = new Date(data.data.date)
+
+      let tYear = new Date().getFullYear();
+      let bYear = birthday.getFullYear();
+      
+      if (today.getMonth() > birthday.getMonth()) 
+        {
+          birthday.setFullYear(today.getFullYear()+1); 
+          bYear -= 1;
+        } 
+      else if (today.getMonth() == birthday.getMonth() && today.getDate() >= birthday.getDate())
+        {
+          birthday.setFullYear(today.getFullYear()+1); 
+          bYear -= 1;
+        }   
+      else {
+          birthday.setFullYear(today.getFullYear());
+        }
+
+      let days = Math.round(Math.abs((today.getTime() - birthday.getTime())/(oneDay)));
+      let years = tYear - bYear
+
+      this.db.doc('/users/' + this.user.uid + '/list/' + idd).update({days: days, years: years})
+    })
+  }
+
 
 }
